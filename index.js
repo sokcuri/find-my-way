@@ -26,7 +26,6 @@
 */
 
 const assert = require('assert')
-const http = require('http')
 const querystring = require('fast-querystring')
 const isRegexSafe = require('safe-regex2')
 const deepEqual = require('fast-deep-equal')
@@ -35,7 +34,7 @@ const { StaticNode, NODE_TYPES } = require('./custom_node')
 const Constrainer = require('./lib/constrainer')
 const { safeDecodeURI, safeDecodeURIComponent } = require('./lib/url-sanitizer')
 
-const httpMethods = http.METHODS
+const httpMethods = ["ACL","BIND","CHECKOUT","CONNECT","COPY","DELETE","GET","HEAD","LINK","LOCK","M-SEARCH","MERGE","MKACTIVITY","MKCALENDAR","MKCOL","MOVE","NOTIFY","OPTIONS","PATCH","POST","PROPFIND","PROPPATCH","PURGE","PUT","REBIND","REPORT","SEARCH","SOURCE","SUBSCRIBE","TRACE","UNBIND","UNLINK","UNLOCK","UNSUBSCRIBE"];
 const FULL_PATH_REGEXP = /^https?:\/\/.*?\//
 const OPTIONAL_PARAM_REGEXP = /(\/:[^/()]*?)\?(\/?)/
 
@@ -594,10 +593,10 @@ Router.prototype.prettyPrint = function (opts = {}) {
   return prettyPrintFlattenedNode.call(this, root, '', true, opts)
 }
 
-for (var i in http.METHODS) {
+for (var i in httpMethods) {
   /* eslint no-prototype-builtins: "off" */
-  if (!http.METHODS.hasOwnProperty(i)) continue
-  const m = http.METHODS[i]
+  if (!httpMethods.hasOwnProperty(i)) continue
+  const m = httpMethods[i]
   const methodName = m.toLowerCase()
 
   if (Router.prototype[methodName]) throw new Error('Method already exists: ' + methodName)
